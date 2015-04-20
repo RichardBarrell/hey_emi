@@ -14,16 +14,21 @@
 	left: 0;
 	overflow: auto;
 }
-h1 {
+h1#h {
 	line-height: 1em;
 	padding: 0;
 	margin: 0;
 }
-textarea {
-	height: 20vh;
+textarea#t {
+	height: 15vh;
 	width: 100%;
-	padding: 0;
-	margin: 0;
+	position: fixed;
+	bottom: 5vh;
+	left: 0;
+}
+input#scale {
+	height: 5vh;
+	width: 100%;
 	position: fixed;
 	bottom: 0;
 	left: 0;
@@ -34,17 +39,28 @@ textarea {
 <div id=scrollpane>
 <h1 id=h>not working</h1>
 </div>
-<textarea id=t>hi</textarea>
+<textarea id=t>Hi</textarea>
+<input id="scale" type="range" min="5" max="20" step="1" />
 
 <script type="text/javascript">
 var t = document.getElementById("t");
 var h = document.getElementById("h");
+var scale_in = document.getElementById("scale");
 t.addEventListener("change", set_h_text, false);
+scale.addEventListener("change", set_h_text, false);
 window.addEventListener("resize", set_h_text, false);
+
 function set_h_text(event) {
+	var factor = parseInt(scale_in.value);
+	var vertical = factor / 55;
+	var horizontal = factor / 80;
+
 	h.textContent = t.value;
-	// apparently min() in CSS is not yet a thing :(
-	h.style.fontSize = Math.min(window.innerWidth / 3.0, window.innerHeight / 2.0).toString() + "px";
+	// apparently min() is not yet a thing :(
+	h.style.fontSize = Math.min(
+		window.innerWidth * horizontal,
+		window.innerHeight * vertical
+	).toString() + "px";
 }
 set_h_text();
 </script>
