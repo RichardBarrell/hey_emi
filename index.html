@@ -14,7 +14,6 @@
 	overflow: auto;
 }
 h1 {
-	font-size: 38vh;
 	line-height: 1em;
 	padding: 0;
 	margin: 0;
@@ -40,8 +39,11 @@ textarea {
 var t = document.getElementById("t");
 var h = document.getElementById("h");
 t.addEventListener("change", set_h_text, false);
+window.addEventListener("resize", set_h_text, false);
 function set_h_text(event) {
 	h.textContent = t.value;
+	// apparently min() in CSS is not yet a thing :(
+	h.style.fontSize = Math.min(window.innerWidth / 3.0, window.innerHeight / 2.0).toString() + "px";
 }
 set_h_text();
 </script>
